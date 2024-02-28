@@ -30,8 +30,12 @@ RUN sudo -u rstudio bash -l -c "ssh-keygen -t rsa -N '' -f /home/rstudio/.ssh/id
 RUN echo ". /opt/age/${AGE_VERSION}/default/common/settings.sh" >> /etc/bash.bashrc
 
 # Deploy AGE launcher 
+#COPY age/ge-2023.1.0pre_devbuild_202304281652-rstudio-age-lx-amd64.tar.gz .
+#RUN tar xvfz /ge-2023.1.0pre_devbuild_202304281652-rstudio-age-lx-amd64.tar.gz -C /opt && rm -f /ge-2023.1.0pre_devbuild_202304281652-rstudio-age-lx-amd64.tar.gz
 COPY age/ge-${AGE_VERSION}-rstudio-age-lx-amd64.tar.gz .
 RUN tar xvfz /ge-${AGE_VERSION}-rstudio-age-lx-amd64.tar.gz -C /opt && rm -f /ge-${AGE_VERSION}-rstudio-age-lx-amd64.tar.gz
+
+
 
 # Start with AGE provided templates and tune them subsequently
 RUN cp /opt/rstudio-age/conf-template/* /etc/rstudio/
