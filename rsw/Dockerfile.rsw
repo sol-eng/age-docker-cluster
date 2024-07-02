@@ -3,16 +3,16 @@ FROM ubuntu:focal
 ARG AGE_VERSION
 
 # Install RStudio Workbench 
-ARG RSW_VER="2022.07.1-554.pro3"
-RUN apt-get update && apt-get install -y curl gdebi-core && \
-	curl -O https://download2.rstudio.org/server/bionic/amd64/rstudio-workbench-${RSW_VER}-amd64.deb && \
-	gdebi -n rstudio-workbench-${RSW_VER}-amd64.deb && \
-	 rm -f rstudio-workbench-${RSW_VER}-amd64.deb
+ARG PWB_VERSION
+RUN apt-get update && apt-get install -y curl gdebi-core
+RUN curl -O https://download2.rstudio.org/server/focal/amd64/rstudio-workbench-${PWB_VERSION}-amd64.deb && \
+	gdebi -n rstudio-workbench-${PWB_VERSION}-amd64.deb && \
+	 rm -f rstudio-workbench-${PWB_VERSION}-amd64.deb
 
 
 # Install R 
 # R_VER can contain multiple versions of R separated by SPACE
-ARG R_VER="3.6.3 4.0.5 4.1.3 4.2.1"
+ARG R_VER="4.0.5 4.1.3 4.2.3 4.3.3 4.4.1"
 RUN for rver in ${R_VER}; do \
 	curl -O https://cdn.rstudio.com/r/ubuntu-2004/pkgs/r-${rver}_1_amd64.deb && \
 	gdebi -n r-${rver}_1_amd64.deb && \
