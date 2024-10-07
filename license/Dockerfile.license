@@ -8,5 +8,8 @@ RUN bash altair_licensing_${LICENSE_MANAGER_VERSION}.linux_x64.bin -i silent && 
 
 COPY license/start-lic.sh .
 
+RUN mkdir -p /license 
+COPY age.dat /license
+
 ENTRYPOINT ./start-lic.sh $LICENSE_MANAGER_VERSION
 

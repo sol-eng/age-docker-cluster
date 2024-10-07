@@ -44,7 +44,7 @@ EOF
    sudo -u ageadmin ssh head "source /opt/age/*/default/common/settings.sh && qconf -as `hostname`"
 
    ln -s /opt/rstudio-age /opt/age/*
-   /usr/lib/rstudio-server/bin/license-manager activate $RSW_LICENSE
+   /usr/lib/rstudio-server/bin/license-manager activate $PWB_LICENSE
    rstudio-server start
    rstudio-launcher start
 
