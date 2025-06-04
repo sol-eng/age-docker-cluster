@@ -1,5 +1,7 @@
 #!/bin/bash
-export LD_LIBRARY_PATH=/usr/local/altair/licensing15.5/bin/
-cd /usr/local/altair/licensing15.5/
-/usr/local/altair/licensing15.5/bin/lmx-serv -l /license/age.dat
+
+set -x 
+export LD_LIBRARY_PATH=/usr/local/altair/licensing$1/bin/
+cd /usr/local/altair/licensing$1/
+/usr/local/altair/licensing$1/bin/lmx-serv -l /license/age.dat
 

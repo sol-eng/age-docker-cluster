@@ -19,8 +19,13 @@ Host *
     StrictHostKeyChecking  no
 EOF
 
+   while true 
+   do
    sleep 5
-
+   if [ -f /opt/age/*/default/common/settings.sh ]; then 
+      break
+   fi
+   done
    sudo -u ageadmin ssh head "source /opt/age/*/default/common/settings.sh && qconf -as `hostname`"
    sudo -u ageadmin ssh head "source /opt/age/*/default/common/settings.sh && qconf -ah `hostname`"
    cd /opt/age/*/ && cat ./inst.conf | sed "s/EXEC_HOST_LIST=.*/EXEC_HOST_LIST=`hostname`/" > ./inst_`hostname`.conf
@@ -39,12 +44,19 @@ Host *
     StrictHostKeyChecking  no
 EOF
 
+   while true 
+   do
    sleep 5
+   if [ -f /opt/age/*/default/common/settings.sh ]; then 
+      break
+   fi
+   done
 
    sudo -u ageadmin ssh head "source /opt/age/*/default/common/settings.sh && qconf -as `hostname`"
 
    ln -s /opt/rstudio-age /opt/age/*
    /usr/lib/rstudio-server/bin/license-manager activate $PWB_LICENSE
+   rm -f /etc/rstudio/launcher.{pem,pub}
    rstudio-server start
    rstudio-launcher start
 

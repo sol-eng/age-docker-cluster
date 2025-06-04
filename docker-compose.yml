@@ -2,12 +2,12 @@ version: "2.2"
 
 services:
   license:
-    image: age-license:${LICENSE_MANAGER_VERSION:-15.5}
+    image: age-license:${LICENSE_MANAGER_VERSION:-2025.0}
     build:
       context: .
       dockerfile: license/Dockerfile.license
       args:
-        LICENSE_MANAGER_VERSION: ${LICENSE_MANAGER_VERSION:-15.5}
+        LICENSE_MANAGER_VERSION: ${LICENSE_MANAGER_VERSION:-2025.0}
     hostname: license.age-docker-cluster_default
     container_name: age-license
     expose:
@@ -17,12 +17,12 @@ services:
     mac_address: de:59:34:6f:b6:98
 
   head:
-    image: age:${AGE_VERSION:-2024.1.0}
+    image: age:${AGE_VERSION:-2025.1.0}
     build:
       context: .
       dockerfile: age/Dockerfile.age
       args: 
-        AGE_VERSION: ${AGE_VERSION:-2024.1.0}
+        AGE_VERSION: ${AGE_VERSION:-2025.1.0}
     command: ["head-node"]
     container_name: head 
     hostname: head.age-docker-cluster_default
@@ -38,12 +38,12 @@ services:
       - "license"
 
   c1:
-    image: age:${AGE_VERSION:-2024.1.0} 
+    image: age:${AGE_VERSION:-2025.1.0} 
     build:
       context: .
       dockerfile: age/Dockerfile.age
       args: 
-        AGE_VERSION: ${AGE_VERSION:-2024.1.0}
+        AGE_VERSION: ${AGE_VERSION:-2025.1.0}
     command: ["compute-node"]
     hostname: c1.age-docker-cluster_default
     container_name: c1
@@ -62,12 +62,12 @@ services:
       - "head"
 
   c2:
-    image: age:${AGE_VERSION:-2024.1.0}
+    image: age:${AGE_VERSION:-2025.1.0}
     build:
       context: .
       dockerfile: age/Dockerfile.age
       args: 
-        AGE_VERSION: ${AGE_VERSION:-2024.1.0}
+        AGE_VERSION: ${AGE_VERSION:-2025.1.0}
     command: ["compute-node"]
     hostname: c2.age-docker-cluster_default
     container_name: c2
@@ -90,9 +90,9 @@ services:
       context: . 
       dockerfile: rsw/Dockerfile.rsw
       args:
-        AGE_VERSION: ${AGE_VERSION:-2024.1.0}
-        PWB_VERSION: ${PWB_VERSION:-2024.09.0-375.pro3}
-    image: rsw:${PWB_VERSION:-2024.09.0-375.pro3}-${AGE_VERSION:-2024.1.0}
+        AGE_VERSION: ${AGE_VERSION:-2025.1.0}
+        PWB_VERSION: ${PWB_VERSION:-2025.05.0-496.pro5}
+    image: rsw:${PWB_VERSION:-2025.05.0-496.pro5}-${AGE_VERSION:-2025.1.0}
     command: ["rsw"]
     hostname: rsw.age-docker-cluster_default
     container_name: rsw

@@ -1,6 +1,7 @@
-FROM ubuntu:focal
+FROM ubuntu:noble
 
-ARG LICENSE_MANAGER_VERSION 
+ARG LICENSE_MANAGER_VERSION=""    
+ENV LIC=${LICENSE_MANAGER_VERSION}
 
 COPY license/altair_licensing_${LICENSE_MANAGER_VERSION}.linux_x64.bin .
 
@@ -11,5 +12,5 @@ COPY license/start-lic.sh .
 RUN mkdir -p /license 
 COPY age.dat /license
 
-ENTRYPOINT ./start-lic.sh $LICENSE_MANAGER_VERSION
+ENTRYPOINT ./start-lic.sh $LIC
 
