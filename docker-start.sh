@@ -62,6 +62,13 @@ EOF
 
    sudo -u ageadmin ssh head "source /opt/age/*/default/common/settings.sh && qconf -as `hostname`"
 
+   cp /opt/rstudio-age/conf-template/vscode.conf /etc/rstudio/vscode.conf
+   cp /opt/rstudio-age/conf-template/vscode.conf /etc/rstudio/positron.conf
+   
+   sed -i 's#^exe.*#exe=/usr/lib/rstudio-server/bin/pwb-code-server/bin/code-server' /etc/rstudio/vscode.conf
+   sed -i 's#^exe.*#exe=/usr/lib/rstudio-server/bin/positron-server/bin/positron-server' /etc/rstudio/positron.conf
+   #cp /opt/rstudio-age/conf-template/jupyter.conf /etc/rstudio
+
    ln -s /opt/rstudio-age /opt/age/*
    /usr/lib/rstudio-server/bin/license-manager activate $PWB_LICENSE
    rm -f /etc/rstudio/launcher.{pem,pub}
