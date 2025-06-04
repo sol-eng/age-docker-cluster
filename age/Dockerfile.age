@@ -26,15 +26,17 @@ RUN groupadd -g 6200 ageadmin && useradd -s /bin/bash -u 6200 -g 6200 ageadmin -
 RUN sudo -u ageadmin bash -l -c "ssh-keygen -t rsa -N '' -f /home/ageadmin/.ssh/id_rsa && cat /home/ageadmin/.ssh/id_rsa.pub >> /home/ageadmin/.ssh/authorized_keys"
 
 # Add rstudio user account
-RUN groupadd -g 2000 rstudio && useradd -u 2000 rstudio -g rstudio
+RUN groupadd -g 2000 rstudio && useradd -u 2000 rstudio -g rstudio -s /bin/bash
 RUN echo "rstudio:rstudio" | chpasswd
 
 
 # Copy installation template into container  
 COPY age/inst.conf /opt/age/${AGE_VERSION}/ 
 
-# Ensure AGE binaries are in users' PATH
+# Ensure AGE environment is set up for all users and processes
+RUN echo ". /opt/age/${AGE_VERSION}/default/common/settings.sh" >> /etc/profile
 RUN echo ". /opt/age/${AGE_VERSION}/default/common/settings.sh" >> /etc/bash.bashrc
+RUN mkdir -p /etc/profile.d && echo ". /opt/age/${AGE_VERSION}/default/common/settings.sh" > /etc/profile.d/age.sh
 
 # Ensure that inst.conf refers the correct Grid Engine version
 RUN sed -i "s/XXX/${AGE_VERSION}/" /opt/age/${AGE_VERSION}/inst.conf
@@ -43,9 +45,12 @@ RUN sed -i "s/XXX/${AGE_VERSION}/" /opt/age/${AGE_VERSION}/inst.conf
 # apt show  r-4.2.0  | grep ^Depends | cut -d ":" -f 2 | sed 's/\,/ /g'
 RUN apt-get install -y  g++  gcc  gfortran  libbz2-dev  libblas-dev  libc6  libcairo2  libcurl4  libglib2.0-0  libgomp1  libicu-dev  libjpeg8  liblapack-dev  liblzma-dev  libpango-1.0-0  libpangocairo-1.0-0  libpaper-utils  libpcre2-dev  libpng16-16  libreadline8  libtcl8.6  libtiff5-dev  libtk8.6  libx11-6  libxt6  make  ucf  unzip  zip  zlib1g-dev
 # apt show rstudio-servr ...
-RUN apt-get install -y rrdtool  psmisc  libapparmor1  libedit2  sudo  lsb-release  libclang-dev  libsqlite3-0  libpq5  libc6
+RUN apt-get install -y rrdtool  psmisc  libapparmor1  libedit2  sudo  lsb-release  libclang-dev  libsqlite3-0  libpq5  libc6 
 
 COPY docker-start.sh /usr/local/bin/docker-start.sh
+
+# Needed for sge_sheperd
+RUN apt-get install -y libelf-dev libtirpc-dev
 
 ENTRYPOINT ["/usr/local/bin/docker-start.sh"]
 
