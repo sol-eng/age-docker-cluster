@@ -5,6 +5,14 @@ if [ "$1" = "head-node" ]; then
    echo "Installing AGE on the head node..."
    rm -rf /opt/age/*/default 
    cd /opt/age/*/ && ./inst_sge -m -auto  `pwd`/inst.conf 
+   source /opt/age/*/default/common/settings.sh
+   echo "Configuring PE's"
+   for pe in smp mpi openmp
+   do
+     qconf -Ap /tmp/$pe.conf
+   done
+   echo "AGE installed successfully on the head node."
+ 
    while true
 	do
 	sleep 10

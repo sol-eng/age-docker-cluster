@@ -52,6 +52,11 @@ COPY docker-start.sh /usr/local/bin/docker-start.sh
 # Needed for sge_sheperd
 RUN apt-get install -y libelf-dev libtirpc-dev
 
+# Various PE's 
+COPY age/smp.conf /tmp
+COPY age/openmp.conf /tmp
+COPY age/mpi.conf /tmp
+
 ENTRYPOINT ["/usr/local/bin/docker-start.sh"]
 
 CMD ["head-node"]
