@@ -10,6 +10,7 @@ if [ "$1" = "head-node" ]; then
    for pe in smp mpi openmp
    do
      qconf -Ap /tmp/$pe.conf
+     qconf -aattr queue pe_list $pe all.q
    done
    echo "AGE installed successfully on the head node."
  
