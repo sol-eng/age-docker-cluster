@@ -5,7 +5,7 @@ ARG AGE_VERSION
 # Install RStudio Workbench 
 ARG PWB_VERSION
 RUN apt-get update && apt-get install -y curl gdebi-core
-RUN curl -O https://download2.rstudio.org/server/jammy/amd64/rstudio-workbench-${PWB_VERSION}-amd64.deb && \
+RUN curl -O https://s3.amazonaws.com/rstudio-ide-build/server/jammy/amd64/rstudio-workbench-${PWB_VERSION}-amd64.deb && \
 	gdebi -n rstudio-workbench-${PWB_VERSION}-amd64.deb && \
 	 rm -f rstudio-workbench-${PWB_VERSION}-amd64.deb
 
