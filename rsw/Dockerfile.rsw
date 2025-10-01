@@ -1,4 +1,4 @@
-FROM ubuntu:noble
+FROM ubuntu:24.10
 
 ARG AGE_VERSION
 
